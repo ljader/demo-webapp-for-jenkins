@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        bat 'mvn test'
+        bat (script: 'mvn test', label: 'juuuuunit tests')
       }
       post {
         always {
@@ -26,7 +26,7 @@ pipeline {
     stage('Finalize') {
       steps {
         echo "Using ${env.GLOBAL_TEAMS_URL}"
-        office365ConnectorSend message:"started ${env.JOB_NAME} ${env.BUILD_NUMBER}", webhookUrl: "${env.GLOBAL_TEAMS_URL}"
+        office365ConnectorSend color:'green', message:"started ${env.JOB_NAME} ${env.BUILD_NUMBER}", webhookUrl: "${env.GLOBAL_TEAMS_URL}"
       }
     }
   }
